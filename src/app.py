@@ -201,9 +201,15 @@ if clf_model is not None:
     with tab2:
         # Radar Chart or simple Bar comparison
         avg_vals = df[feature_cols].mean()
-        input_vals = pd.Series(user_input)
         
-        comp_df = pd.DataFrame({'Metric': feature_cols, 'University': input_vals.values, 'Global Average': avg_vals.values})
+        # Filter input to match valid feature columns (exclude country_encoded)
+        input_vals = [user_input[col] for col in feature_cols]
+        
+        comp_df = pd.DataFrame({
+            'Metric': feature_cols, 
+            'University': input_vals, 
+            'Global Average': avg_vals.values
+        })
         comp_df = comp_df.set_index('Metric')
         
         st.bar_chart(comp_df)
