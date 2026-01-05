@@ -39,6 +39,10 @@ def load_and_prep_data():
     ]
     
     feature_cols = [c for c in feature_cols if c in df.columns]
+    
+    # Note: Model expects 'country_encoded' as the last feature.
+    # We don't add it to 'feature_cols' here because that controls the sliders loop.
+    # We will add it manually in the user input section.
 
     # Load Model & Scaler
     import joblib
@@ -68,15 +72,52 @@ if clf_model is not None:
     
     user_input = {}
     for col in feature_cols:
-        # Get min/max for range
-        min_val = float(df[col].min())
-        max_val = float(df[col].max())
-        mean_val = float(df[col].mean())
-        
-        user_input[col] = st.sidebar.slider(f"{col.replace('_', ' ').title()}", min_val, max_val, mean_val)
+        if col != 'country_encoded':
+            # Get min/max for range
+            min_val = float(df[col].min())
+            max_val = float(df[col].max())
+            mean_val = float(df[col].mean())
+            
+            user_input[col] = st.sidebar.slider(f"{col.replace('_', ' ').title()}", min_val, max_val, mean_val)
+    
+    # Add Country Input
+    countries = df['country'].unique() if 'country' in df.columns else []
+    # If Country is not in df columns (loaded as None), we need to handle it.
+    # In load_and_prep_data, we return df. Let's make sure 'country' is in it.
+    
+    selected_country = st.sidebar.selectbox("Country", sorted(countries)) if len(countries) > 0 else "USA"
+    
+    # We need to encode the country. Ideally we should have saved the LabelEncoder.
+    # Quick fix: Re-fit label encoder on the loaded df (assuming df covers all training countries or close enough)
+    from sklearn.preprocessing import LabelEncoder
+    le = LabelEncoder()
+    # Fit on all countries in DB
+    if 'country' in df.columns:
+        le.fit(df['country'].astype(str))
+        try:
+            country_encoded = le.transform([selected_country])[0]
+        except:
+            country_encoded = 0 # Default if unknown
+    else:
+        country_encoded = 0
+            
+    user_input['country_encoded'] = country_encoded
 
     # Predict
+    # Ensure order matches training: numerical features + country_encoded
+    # Training features were: 'quality_of_education', 'alumni_employment', 'quality_of_faculty', 'publications', 'influence', 'citations', 'broad_impact', 'patents', 'country_encoded'
+    
+    ordered_features = [
+        'quality_of_education', 'alumni_employment', 'quality_of_faculty',
+        'publications', 'influence', 'citations', 'broad_impact', 'patents',
+        'country_encoded'
+    ]
+    
     input_df = pd.DataFrame([user_input])
+    
+    # Reorder columns to match scaler's expected input
+    input_df = input_df[ordered_features]
+    
     input_scaled = scaler.transform(input_df)
     
     # predicted_score = reg_model.predict(input_scaled)[0]
