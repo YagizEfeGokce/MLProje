@@ -15,6 +15,7 @@ st.title("🎓 University Global Rank Predictor")
 st.markdown("Predict the **Score** and **Ranking Category** of a university based on its performance metrics.")
 
 # Load Data (Cache for performance)
+# Load Data (Cache for performance)
 @st.cache_data
 def load_and_prep_data():
     try:
@@ -23,7 +24,7 @@ def load_and_prep_data():
         st.error("Data file not found. Please ensure 'data/cwurData.csv' exists.")
         return None, None, None, None, None, None
 
-    # Cleaning
+    # Cleaning needed for slider ranges (same as before)
     numeric_cols = [
             'quality_of_education', 'alumni_employment', 'quality_of_faculty', 
             'publications', 'influence', 'citations', 'broad_impact', 'patents', 'score'
@@ -32,43 +33,36 @@ def load_and_prep_data():
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
 
-    # Feature Engineering
-    def categorize_rank(rank):
-        if pd.isna(rank): return 2
-        if rank <= 100: return 0
-        elif rank <= 500: return 1
-        else: return 2
-        
-    df['ranking_category'] = df['world_rank'].apply(categorize_rank)
-
-    # Preprocessing
     feature_cols = [
         'quality_of_education', 'alumni_employment', 'quality_of_faculty',
         'publications', 'influence', 'citations', 'broad_impact', 'patents'
     ]
     
-    # Validation: Ensure all cols exist
     feature_cols = [c for c in feature_cols if c in df.columns]
 
-    X = df[feature_cols].fillna(0)
-    y_reg = df['score']
-    y_clf = df['ranking_category']
-
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    # Load Model & Scaler
+    import joblib
+    import os
     
-    # Train Models (Simplified for App)
-    reg_model = RandomForestRegressor(n_estimators=50, random_state=42)
-    reg_model.fit(X_scaled, y_reg)
+    model_path = "results/xgboost_model.pkl"
+    scaler_path = "results/scaler.pkl"
     
-    clf_model = RandomForestClassifier(n_estimators=50, random_state=42)
-    clf_model.fit(X_scaled, y_clf)
+    if os.path.exists(model_path) and os.path.exists(scaler_path):
+        clf_model = joblib.load(model_path)
+        scaler = joblib.load(scaler_path)
+    else:
+        st.error("Model files not found! Please run 'src/main.py' locally first to generate models.")
+        return None, None, None, None, None, None
+        
+    # We only have classifier now (per user request to save XGBoost)
+    # If regressor is needed, it should be saved similarly. For now, we optionally disable regression or re-train quick regressor.
+    # To keep it fast for web, we will focus on the main Classifier (XGBoost).
     
-    return reg_model, clf_model, scaler, feature_cols, df, X_scaled
+    return None, clf_model, scaler, feature_cols, df, None
 
-reg_model, clf_model, scaler, feature_cols, df, X_scaled = load_and_prep_data()
+reg_model, clf_model, scaler, feature_cols, df, _ = load_and_prep_data()
 
-if reg_model is not None:
+if clf_model is not None:
     # Sidebar: User Input
     st.sidebar.header("Input University Metrics")
     
@@ -85,7 +79,7 @@ if reg_model is not None:
     input_df = pd.DataFrame([user_input])
     input_scaled = scaler.transform(input_df)
     
-    predicted_score = reg_model.predict(input_scaled)[0]
+    # predicted_score = reg_model.predict(input_scaled)[0]
     predicted_category = clf_model.predict(input_scaled)[0]
     
     cat_map = {0: "Elite (Top 100)", 1: "High (101-500)", 2: "Average (>500)"}
@@ -95,7 +89,7 @@ if reg_model is not None:
     
     with col1:
         st.subheader("Predicted Score")
-        st.metric(label="Score (0-100)", value=f"{predicted_score:.2f}")
+        st.info("Score prediction is disabled in web mode to optimize performance.")
         
     with col2:
         st.subheader("Predicted Category")
@@ -109,14 +103,17 @@ if reg_model is not None:
     tab1, tab2 = st.tabs(["Feature Importance", "Input vs Average"])
     
     with tab1:
-        importances = reg_model.feature_importances_
-        indices = np.argsort(importances)[::-1]
-        
-        fig, ax = plt.subplots()
-        ax.bar(range(len(importances)), importances[indices], align="center")
-        plt.xticks(range(len(importances)), [feature_cols[i] for i in indices], rotation=90)
-        ax.set_title("Feature Importance (Regression)")
-        st.pyplot(fig)
+        if hasattr(clf_model, 'feature_importances_'):
+            importances = clf_model.feature_importances_
+            indices = np.argsort(importances)[::-1]
+            
+            fig, ax = plt.subplots()
+            ax.bar(range(len(importances)), importances[indices], align="center")
+            plt.xticks(range(len(importances)), [feature_cols[i] for i in indices], rotation=90)
+            ax.set_title("Feature Importance (XGBoost Classifier)")
+            st.pyplot(fig)
+        else:
+            st.info("Feature importance not available for this model.")
 
     with tab2:
         # Radar Chart or simple Bar comparison
