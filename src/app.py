@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+import sklearn
 
 # Set page config
 st.set_page_config(page_title="University Rank Predictor", layout="wide")
@@ -130,6 +131,24 @@ if clf_model is not None:
         input_scaled = scaler.transform(input_df)
     except Exception as e:
         st.error(f"Prediction Error: {e}")
+        
+        # Debugging block
+        with st.expander("Show Debug Details", expanded=True):
+            st.write("Sklearn Version:", sklearn.__version__)
+            if hasattr(scaler, 'feature_names_in_'):
+                st.write("Scaler expects:", scaler.feature_names_in_)
+            else:
+                st.write("Scaler has no feature_names_in_")
+            
+            st.write("Input Columns:", input_df.columns.tolist())
+            
+            # Check for mismatch
+            if hasattr(scaler, 'feature_names_in_'):
+                missing = set(scaler.feature_names_in_) - set(input_df.columns)
+                extra = set(input_df.columns) - set(scaler.feature_names_in_)
+                st.write("Missing:", missing)
+                st.write("Extra:", extra)
+                
         st.stop()
     
     # predicted_score = reg_model.predict(input_scaled)[0]
