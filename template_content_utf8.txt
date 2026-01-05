@@ -1,0 +1,118 @@
+COE305 MACHINE LEARNING
+Final Project Report
+Deadline: 04-01-2026
+
+Team Members:
+
+Project Title: 
+
+Abstract (150-200 words)
+
+
+Introduction 
+Background of the problem
+Motivation for using Machine Learning
+Societal / practical relevance
+
+Problem Statement
+Clearly define:
+The prediction / classification task
+Why the problem is important?
+Limitations of existing solutions
+Objectives
+List 3–5 clear objectives
+Dataset Description
+Dataset Source:
+Data Type: (Structured / Image / Text / Time-series)
+Number of Samples:
+Number of Features:
+Target Variable:
+Link for the Dataset:
+DATA PREPROCESSING & EDA
+Data Pre-processing
+Handling Missing Values
+Outlier Detection & Treatment
+Encoding of Categorical Features
+Feature Scaling / Normalization
+Initial Feature Selection
+Exploratory Data Analysis (EDA)
+Include:
+Statistical summary
+Distribution plots
+Correlation heatmap
+Target variable analysis
+NON-ENSEMBLE MODELING
+Non-ensemble Models Implemented (short description of each)
+Model 1
+Model 2
+Model 3
+Cross-Validation Setup
+CV technique:
+Number of folds:
+Evaluation metrics:
+Non-ensemble Models Results
+Non-ensemble Models Performance Table
+
+
+
+
+Results and Discussion
+Justify why your best and least performed models. Write a discussion in detail.
+ENSEMBLE LEARNING MODELING, TUNING & COMPARISON
+Ensemble Models (Write a description about each models)
+Model 4
+Model 5 
+Model 6 
+Hyperparameter Tuning
+Tuning Strategy
+Method used: GridSearchCV / RandomizedSearchCV
+Cross-validation folds:
+Scoring metric:
+Hyperparameter Details
+
+Ensemble Learning Models Performance Table (Before Hyperparameter tuning)
+
+
+
+
+Results and Discussion
+Justify why your best and least performed models. Write a discussion in detail.
+
+Ensemble Learning Models Performance Table (After Hyperparameter tuning)
+
+
+
+
+Results and Discussion
+Justify why your best and least performed models. Write a discussion in detail.
+Feature Selection Analysis (Ensemble Learning Models)
+Show the graph of the feature importance by the Ensemble Learning Models
+Model4
+Model 5
+Model 6
+
+Overall Results and Discussion
+Comparing all the 6 models
+Justify why your best and least performed models. Write a discussion in detail.
+
+Conclusion 
+Conclude your report in 150 – 200 words
+Final best-performing model
+Justification based on results
+Future work and improvements
+Tools & Technologies Used
+
+References
+Dataset sources, libraries, research articles.
+
+Bonus Points (Add only if implemented)
+Customized Dataset (3 points)
+Add description of it (how was it collected) 
+Whether all the data was collected by your own? 
+If the dataset was merged, what were the features in the different datasets etc…
+User Interface (2 points)
+Images of user interface and how they interact.
+Provide the active link for checking your UI and its interactions
+SHAP Analysis (2 points) 
+Add the code snippet for SHAP analysis
+Add the SHAP results with descriptions

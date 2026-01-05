@@ -1,0 +1,106 @@
+ 
+COE305 MACHINE LEARNING 
+PROJECT GUIDELINES 
+ 
+Project Weight: 30 % of Final Grade 
+Team Size: 3 students 
+ 
+1. Project Objective 
+The purpose of this project is to apply the concepts learned throughout the course to a real-
+world regression or classification problem. 
+You will work as a team to design, implement, and evaluate several machine-learning models 
+from the course topics. 
+By completing this project, you will: 
+• Gain experience with the full ML pipeline — data → model → evaluation → 
+interpretation. 
+• Apply supervised and ensemble methods in practical scenarios. 
+• Develop teamwork, communication, and report-writing skills. 
+2. Timeline & Deliverables 
+Stage Description Due Week Weight 
+Stage 1 – Project 
+Proposal 
+Submit a 1 -page 
+proposal including 
+team details, problem 
+statement, dataset 
+source, and 
+objectives. 
+Week 3 5% 
+    
+Stage 2 – Dataset & 
+EDA Submission 
+Submit cleaned 
+dataset and EDA 
+report (visualizations 
++ summary stats). 
+Week 5 5 % 
+Stage 3 – Midterm 
+Progress Report 
+Submit initial models 
+(≥ 3 algorithms) + 
+baseline results. 
+Week 7 10 % 
+Stage 4 – Final 
+Report & 
+Presentation 
+Submit final report 
+and 10 -minute 
+presentation slides, 
+1-page summary of 
+personal contribution 
+and learning. 
+Week 14 10% 
+Includes 2% for 
+Individual 
+Reflection 
+ 
+ 
+3. Project Instructions 
+A. Problem Definition 
+• Choose a supervised learning problem (regression or classification). 
+• Clearly state the goal and why it matters. 
+• Make sure the problem is feasible with your resources. 
+B. Dataset 
+You may use: 
+1. Public datasets (Kaggle, UCI, OpenML, Google Dataset Search) 
+2. Combined datasets or API-based data collection 
+3. Self-collected datasets (eligible for bonus points) 
+Your report must include: 
+• Dataset source and link 
+• Number of instances and features 
+• Target variable and problem type 
+• Ethical and privacy considerations 
+ 
+C. Data Pre-processing & EDA 
+• Handle missing values, duplicates, and outliers. 
+• Encode categorical variables and scale numerical ones. 
+• Provide visual summaries (correlation plots, histograms, box plots). 
+D. Model Implementation 
+• Train at least three models from different families (e.g., Decision Tree, Random Forest, 
+SVM). 
+• Use cross-validation and hyperparameter tuning (GridSearchCV / 
+RandomizedSearchCV). 
+• Evaluate with appropriate metrics (Accuracy, Precision, Recall, F1, RMSE, R², etc.). 
+E. Results and Discussion 
+• Compare models using tables and graphs. 
+• Explain why certain models performed better. 
+• Discuss overfitting/underfitting and future improvements. 
+F. Report Format 
+Your final report ( PDF) must include: 
+1. Title of Project 
+ 
+2. Team Members and IDs 
+3. Introduction & Motivation 
+4. Dataset Description 
+5. Methodology (Preprocessing + Algorithms) 
+6. Results & Discussion 
+7. Conclusion & Future Work 
+8. References 
+G. Presentation 
+• Each team gives a 10-minute presentation in Week 14. 
+• All members must participate. 
+• Visuals should clearly show key findings and metrics. 
+4. Bonus Opportunities 
+• +3 % for self-collected or combined datasets. 
+• +2 % for creative visualizations or simple UI (e.g., Streamlit dashboard). 
+ 

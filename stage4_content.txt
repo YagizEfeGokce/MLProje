@@ -1,0 +1,27 @@
+COE305 Machine Learning 
+Final Project Submission Guidelines 
+ 
+• Students must submit the final project as a TEAM submission on Blackboard. 
+• All required components must be uploaded separately as instructed below. 
+Submission Requirements (ALL are mandatory) 
+1) Final Project Report 
+• Use the official Final Report Template provided 
+• File format: 
+o PDF 
+• File name format: StudentNoA_StudentNoB_StudentNoC_Report.pdf 
+ 
+2) Jupyter Notebook (.ipynb) – LINK ONLY 
+• Upload your .ipynb file link 
+• Share as: 
+• Anyone with the link – View only 
+3) Presentation Slides 
+• File format: 
+o .pptx only 
+• File name format: StudentNoA_StudentNoB_StudentNoC_Presentation.pptx 
+4) Presentation Video (TEAM recording) – LINK ONLY 
+• Students must strictly follow the video recording and upload instructions already 
+posted on Blackboard 
+ 
+Note: 
+❌ Do NOT upload the video file on the blackboard 
+❌ Do NOT submit a ZIP file 

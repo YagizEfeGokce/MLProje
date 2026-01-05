@@ -1,0 +1,34 @@
+COE305 MACHINE LEARNING
+Stage 3 – Model Building & Baseline Evaluation
+Deadline: 14-12-2025
+
+Team Members:
+
+Project Title: 
+
+Dataset: 
+Source: 
+Samples (rows): 
+Features (columns): 
+Target variable: 
+Train–test split ratio:
+Regression/ Classification task: 
+Model Selection (Choose at least 3 algorithms)
+
+Cross-Validation Setup
+Technique: K-Fold Cross Validation/Stratified K-fold Cross Validation
+Number of folds: ____ (e.g., 5 or 10)
+Scoring Metric: Accuracy / F1 / R² / RMSE (depending on task type)
+Model Performance Results 
+If classification task (training results)
+
+If classification task (testing results)
+
+If regression Task (training results)
+
+If regression Task (testing results)
+
+Analysis & Observations
+Which model performed best and why?
+Were there any overfitting/underfitting signs?
+How consistent were results across folds?

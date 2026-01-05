@@ -1,0 +1,28 @@
+COE305 MACHINE LEARNING
+Project Proposal
+Deadline: 26-10-2025
+
+Team Members
+
+Project Title
+Predicting University Global Rank Using Machine Learning Models
+
+Problem Statement
+Global university rankings significantly impact student decisions, institutional reputation, and funding allocation. However, the ranking process involves numerous measurable and qualitative factor such as research output, alumni employment, and academic reputation that interact in complex ways. Most universities lack data driven guidance to improve their rankings, relying mostly on broad strategies and historic performance.
+This project aims to build predictive ML models to estimate a university’s global ranking based on objective institutional metrics. This allows higher education leaders to focus on actions backed by data and for students to make more informed choices.
+
+Objectives
+Collect, clean, and preprocess the CWUR university ranking dataset (2012–2023).
+Apply multiple supervised ML algorithms (e.g. Linear Regression, Random Forest, XGBoost) to predict ranking scores and categories.
+Evaluate models using metrics like RMSE, R², Accuracy, and F1-Score.
+Identify most influential ranking features and visualize their impacts.
+Provide insights and recommendations to improve university performance.
+
+Dataset Information
+Dataset Source: Kaggle
+Dataset Name: Ultimate University Ranking (CWUR 2012–2023)
+Dataset Link: https://www.kaggle.com/datasets/erfansobhaei/ultimate-university-ranking
+Data Type: Structured (CSV)
+Number of Features: 13 (e.g. quality of education, alumni employment, publications, citations, patents) + engineered features
+Number of Samples: ~20,000 rows (2,000+ universities × 11 years)
+Target Variable: score (regression), ranking_category (classification)
