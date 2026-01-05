@@ -79,7 +79,14 @@ if clf_model is not None:
             max_val = float(df[col].max())
             mean_val = float(df[col].mean())
             
-            user_input[col] = st.sidebar.slider(f"{col.replace('_', ' ').title()}", min_val, max_val, mean_val)
+            user_input[col] = st.sidebar.number_input(
+                f"{col.replace('_', ' ').title()}", 
+                min_value=min_val, 
+                max_value=max_val, 
+                value=mean_val,
+                step=1.0,
+                format="%.0f"
+            )
     
     # Add Country Input
     countries = df['country'].unique() if 'country' in df.columns else []
@@ -210,9 +217,23 @@ if clf_model is not None:
             'University': input_vals, 
             'Global Average': avg_vals.values
         })
-        comp_df = comp_df.set_index('Metric')
+        comp_df = comp_df.reset_index()
+        import altair as alt
         
-        st.bar_chart(comp_df)
+        # Melt for Altair
+        df_melt = comp_df.melt(id_vars='Metric', var_name='Type', value_name='Value')
+        
+        chart = alt.Chart(df_melt).mark_bar().encode(
+            x=alt.X('Metric:N', axis=alt.Axis(labelAngle=-45)),
+            y=alt.Y('Value:Q', title='Rank / Value'),
+            color='Type:N',
+            xOffset='Type:N',
+            tooltip=['Metric', 'Type', 'Value']
+        ).properties(
+            title="University vs Global Average Comparison"
+        )
+        
+        st.altair_chart(chart, use_container_width=True)
 
 else:
     st.warning("Model training failed or data not loaded.")
