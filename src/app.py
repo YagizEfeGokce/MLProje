@@ -162,7 +162,15 @@ if clf_model is not None:
             
             fig, ax = plt.subplots()
             ax.bar(range(len(importances)), importances[indices], align="center")
-            plt.xticks(range(len(importances)), [feature_cols[i] for i in indices], rotation=90)
+            # Use ordered_features for labels (includes country)
+            feature_names = ordered_features if 'ordered_features' in locals() else feature_cols
+            # If strictly using feature_cols (8 items) but importances has 9, we need to match.
+            # Best to use scaler.feature_names_in_ if available
+            if hasattr(clf_model, 'feature_importances_'):
+                 if hasattr(scaler, 'feature_names_in_'):
+                     feature_names = scaler.feature_names_in_
+            
+            plt.xticks(range(len(importances)), [feature_names[i] for i in indices], rotation=90)
             ax.set_title("Feature Importance (XGBoost Classifier)")
             st.pyplot(fig)
         else:
