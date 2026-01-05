@@ -18,7 +18,7 @@ st.markdown("Predict the **Score** and **Ranking Category** of a university base
 # Load Data (Cache for performance)
 # Load Data (Cache for performance)
 @st.cache_data
-def load_and_prep_data():
+def load_data_v2():
     try:
         df = pd.read_csv("data/cwurData.csv")
     except:
@@ -65,7 +65,7 @@ def load_and_prep_data():
     
     return None, clf_model, scaler, feature_cols, df, None
 
-reg_model, clf_model, scaler, feature_cols, df, _ = load_and_prep_data()
+reg_model, clf_model, scaler, feature_cols, df, _ = load_data_v2()
 
 if clf_model is not None:
     # Sidebar: User Input
@@ -126,6 +126,9 @@ if clf_model is not None:
             
     # Reorder columns matches scaler
     input_df = input_df[ordered_features]
+    
+    # DEBUG: Visible proof of update
+    st.write("Columns sent to model:", input_df.columns.tolist())
     
     try:
         input_scaled = scaler.transform(input_df)
