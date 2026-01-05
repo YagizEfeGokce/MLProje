@@ -104,21 +104,33 @@ if clf_model is not None:
     user_input['country_encoded'] = country_encoded
 
     # Predict
-    # Ensure order matches training: numerical features + country_encoded
-    # Training features were: 'quality_of_education', 'alumni_employment', 'quality_of_faculty', 'publications', 'influence', 'citations', 'broad_impact', 'patents', 'country_encoded'
-    
-    ordered_features = [
-        'quality_of_education', 'alumni_employment', 'quality_of_faculty',
-        'publications', 'influence', 'citations', 'broad_impact', 'patents',
-        'country_encoded'
-    ]
+    # Predict
+    # Dynamic feature alignment using scaler's expected features
+    if hasattr(scaler, 'feature_names_in_'):
+        ordered_features = scaler.feature_names_in_
+    else:
+        # Fallback if attribute missing (older sklearn), though we confirmed it exists.
+        ordered_features = [
+            'quality_of_education', 'alumni_employment', 'quality_of_faculty',
+            'publications', 'influence', 'citations', 'broad_impact', 'patents',
+            'country_encoded'
+        ]
     
     input_df = pd.DataFrame([user_input])
     
-    # Reorder columns to match scaler's expected input
+    # Fill missing columns with 0 (safety net)
+    for col in ordered_features:
+        if col not in input_df.columns:
+            input_df[col] = 0
+            
+    # Reorder columns matches scaler
     input_df = input_df[ordered_features]
     
-    input_scaled = scaler.transform(input_df)
+    try:
+        input_scaled = scaler.transform(input_df)
+    except Exception as e:
+        st.error(f"Prediction Error: {e}")
+        st.stop()
     
     # predicted_score = reg_model.predict(input_scaled)[0]
     predicted_category = clf_model.predict(input_scaled)[0]
