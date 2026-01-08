@@ -166,6 +166,48 @@ Comparing all 6 models, **XGBoost** emerged as the clear winner with ~98% accura
 
 ---
 
+### SHAP Analysis (2 points)
+
+To move beyond simple feature importance and understand *how* each feature affects the model's predictions, we utilized **SHAP (SHapley Additive exPlanations)**.
+
+**Code Snippet:**
+
+```python
+import shap
+import joblib
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load trained XGBoost model and data
+model = joblib.load('results/xgboost_model.pkl')
+# ... (Data loading and formatting steps) ...
+
+# Create Tree Explainer
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(X_df)
+
+# Generate Summary Plots
+shap.summary_plot(shap_values, X_df, plot_type="bar")
+shap.summary_plot(shap_values, X_df)
+```
+
+**SHAP Results & Interpretation:**
+
+1. **Feature Importance (Bar Plot):**
+    Consistent with our model's feature importance derived earlier, the SHAP bar plot confirms that **Publications** and **Citations** are the most significant features influencing the global rank.
+
+    ![SHAP Summary Bar](eda_plots/shap_summary_bar.png)
+
+2. **Directional Impact (Beeswarm Plot):**
+    The beeswarm plot provides deeper insight:
+    - **Publications & Citations (High Values = Elite Rank):** Users with *high* values for these metrics (red dots) tend to have negative SHAP values (pushing the class label towards 0, which corresponds to the "Elite" category in our encoding).
+    - **Influence:** Has a similar effect; high influence strongly correlates with better rankings.
+    - **Low Values (Blue dots):** push the prediction towards higher class indices (Average/2), meaning lower performance in these metrics leads to a poorer rank.
+
+    ![SHAP Beeswarm](eda_plots/shap_beeswarm.png)
+
+---
+
 ### Bonus Points
 
 **User Interface (2 points):**
