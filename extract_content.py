@@ -25,7 +25,7 @@ def read_docx(path):
 files = {
     "COE305 Machine Learning Project Guidelines.pdf": "guidelines_content.txt",
     "Stage 1 Project(Done).docx": "stage1_content.txt",
-    "Stage 3 Project template.docx": "stage3_template_content.txt"
+    "Blue and White Modern Illustrative Thesis Defense Presentation.pdf": "presentation_content.txt"
 }
 
 for filename, output_name in files.items():
